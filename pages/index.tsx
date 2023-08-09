@@ -6,7 +6,7 @@ import prisma from "../lib/prisma";
 import Create from "../components/Create";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const todos = await prisma.post.findMany();
+  const todos = await prisma.todo.findMany();
   return {
     props: { todos },
     revalidate: 5,
