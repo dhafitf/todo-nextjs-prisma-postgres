@@ -1,3 +1,29 @@
-# Fullstack Authentication Example with Next.js and NextAuth.js
+# Simple TODO List
 
-This is the starter project for the fullstack tutorial with Next.js and Prisma. You can find the final version of this project in the [`final`](https://github.com/prisma/blogr-nextjs-prisma/tree/final) branch of this repo.
+Simple todo list base on [Vercel Fullstack Guides](https://vercel.com/guides/nextjs-prisma-postgres).
+
+## Getting Started
+
+First, create the tables in your database, you now can use the following command of the Prisma CLI::
+
+```bash
+npx prisma db push
+```
+
+Then, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Environment
+
+```env
+POSTGRES_PRISMA_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?KEY1=VALUE"
+```

@@ -1,60 +1,60 @@
-import React from "react"
-import { GetStaticProps } from "next"
-import Layout from "../components/Layout"
-import Post, { PostProps } from "../components/Post"
+import React, { useState } from "react";
+import { GetStaticProps } from "next";
+import Layout from "../components/Layout";
+import Todo, { TodoProps } from "../components/Todo";
+import prisma from "../lib/prisma";
+import Create from "../components/Create";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = [
-    {
-      id: "1",
-      title: "Prisma is the perfect ORM for Next.js",
-      content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-      published: false,
-      author: {
-        name: "Nikolas Burk",
-        email: "burk@prisma.io",
-      },
-    },
-  ]
-  return { 
-    props: { feed }, 
-    revalidate: 10 
-  }
-}
+  const todos = await prisma.post.findMany();
+  return {
+    props: { todos },
+    revalidate: 5,
+  };
+};
 
 type Props = {
-  feed: PostProps[]
-}
+  todos: TodoProps[];
+};
 
 const Blog: React.FC<Props> = (props) => {
+  const [todosList, setTodosList] = useState(props.todos || []);
+
+  const handleAddTodo = (body: TodoProps) => {
+    const newArr = [...todosList, body];
+    setTodosList(newArr);
+  };
+
   return (
     <Layout>
       <div className="page">
-        <h1>Public Feed</h1>
+        <Create onAdd={(body) => handleAddTodo(body)} />
+        <h1>Todo</h1>
         <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
+          {!todosList.length && <p>No todo</p>}
+          {todosList.map((todo) => (
+            <div key={todo.id} className="todo">
+              <Todo todo={todo} />
             </div>
           ))}
         </main>
       </div>
       <style jsx>{`
-        .post {
+        .todo {
           background: white;
           transition: box-shadow 0.1s ease-in;
         }
 
-        .post:hover {
+        .todo:hover {
           box-shadow: 1px 1px 3px #aaa;
         }
 
-        .post + .post {
+        .todo + .todo {
           margin-top: 2rem;
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default Blog
+export default Blog;

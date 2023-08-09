@@ -4,14 +4,13 @@ import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
   const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
+  const isActive: (pathname: string) => boolean = (pathname) => router.pathname === pathname;
 
   let left = (
     <div className="left">
       <Link href="/">
         <a className="bold" data-active={isActive("/")}>
-          Feed
+          Simple todo list
         </a>
       </Link>
       <style jsx>{`
