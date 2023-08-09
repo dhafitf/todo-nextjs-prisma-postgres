@@ -8,6 +8,7 @@ First, create the tables in your database, you now can use the following command
 
 ```bash
 npx prisma db push
+npx prisma generate
 ```
 
 Then, run the development server:
